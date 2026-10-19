@@ -1,6 +1,6 @@
-import { GameCard } from '../components/GameCard'
-import { PageHeading } from '../components/PageHeading'
-import { games } from '../data/games'
+import { PageHeading } from '@/shared/components/PageHeading'
+import { GameCard } from './components/GameCard'
+import { games } from './games'
 
 export function GamesPage() {
   return (

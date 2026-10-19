@@ -1,12 +1,6 @@
 import { useRef } from 'react'
-import {
-  Vial,
-  type Point,
-  type PositionedVial,
-  type VialAction,
-  type VialData,
-  type VialHandle,
-} from '../../components/games/Vial'
+import { Vial } from './components/Vial'
+import type { Point, PositionedVial, VialAction, VialData, VialHandle } from './types'
 
 const canvas = {
   width: 960,
@@ -62,7 +56,7 @@ const curveStart: Point = {
 const curveControl: Point = { x: curveStart.x + 190, y: curveStart.y - 30 }
 const curveEnd: Point = { x: curveStart.x + 260, y: curveStart.y + 180 }
 
-export function WaterSortPuzzlePage() {
+export function WaterSortPage() {
   const vialRefs = useRef<Record<string, VialHandle | null>>({})
   const gameBusy = useRef(false)
 

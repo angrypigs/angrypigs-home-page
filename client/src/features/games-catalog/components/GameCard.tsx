@@ -1,5 +1,5 @@
-import type { Game } from '../data/games'
-import { ButtonLink } from './ButtonLink'
+import { ButtonLink } from '@/shared/components/ButtonLink'
+import type { Game } from '../games'
 
 type GameCardProps = {
   game: Game

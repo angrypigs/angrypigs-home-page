@@ -1,4 +1,5 @@
 import {
+  useCallback,
   useId,
   useImperativeHandle,
   useRef,
@@ -7,36 +8,8 @@ import {
   type Ref,
 } from 'react'
 import { motion, useAnimationControls } from 'motion/react'
-import { liquidColors, type LiquidColor } from '../../utils/liquidColors'
-
-export type Point = {
-  x: number
-  y: number
-}
-
-export type VialData = {
-  id: string
-  width: number
-  height: number
-  fill: VialFill
-}
-
-export type VialFill =
-  | readonly []
-  | readonly [LiquidColor]
-  | readonly [LiquidColor, LiquidColor]
-  | readonly [LiquidColor, LiquidColor, LiquidColor]
-  | readonly [LiquidColor, LiquidColor, LiquidColor, LiquidColor]
-
-export type PositionedVial = VialData & Point
-
-// Polecenia, które rodzic może wysłać do fiolki.
-export type VialAction = 'lift' | 'rotate'
-
-// Publiczna metoda udostępniana rodzicowi przez ref.
-export type VialHandle = {
-  play: (action: VialAction) => Promise<void>
-}
+import type { PositionedVial, VialAction, VialHandle } from '../types'
+import { liquidColors } from '../utils/liquidColors'
 
 type VialProps = PositionedVial & {
   onClick?: (id: string) => void
@@ -70,31 +43,34 @@ export function Vial({ onClick, ref, ...vial }: VialProps) {
   const layerHeight = (vial.height - inset * 2) / 4
 
   // Animacje są uruchamiane po jednej, nigdy równocześnie.
-  function runAnimation(action: VialAction): Promise<void> {
-    switch (action) {
-      case 'lift':
-        return controls.start({
-          y: [0, -35, 0],
-          rotate: 0,
-          transition: {
-            duration: 0.8,
-            ease: 'easeInOut',
-            times: [0, 0.5, 1],
-          },
-        })
+  const runAnimation = useCallback(
+    (action: VialAction): Promise<void> => {
+      switch (action) {
+        case 'lift':
+          return controls.start({
+            y: [0, -35, 0],
+            rotate: 0,
+            transition: {
+              duration: 0.8,
+              ease: 'easeInOut',
+              times: [0, 0.5, 1],
+            },
+          })
 
-      case 'rotate':
-        return controls.start({
-          y: 0,
-          rotate: [0, 65, 0],
-          transition: {
-            duration: 1.4,
-            ease: 'easeInOut',
-            times: [0, 0.5, 1],
-          },
-        })
-    }
-  }
+        case 'rotate':
+          return controls.start({
+            y: 0,
+            rotate: [0, 65, 0],
+            transition: {
+              duration: 1.4,
+              ease: 'easeInOut',
+              times: [0, 0.5, 1],
+            },
+          })
+      }
+    },
+    [controls],
+  )
 
   useImperativeHandle(
     ref,
@@ -110,7 +86,7 @@ export function Vial({ onClick, ref, ...vial }: VialProps) {
         return next
       },
     }),
-    [controls],
+    [runAnimation],
   )
 
   function handleClick() {

@@ -1,5 +1,5 @@
 import { Link } from 'react-router'
-import { PageHeading } from '../components/PageHeading'
+import { PageHeading } from '@/shared/components/PageHeading'
 
 export function NotFoundPage() {
   return (

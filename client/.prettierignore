@@ -1,0 +1,11 @@
+# Dependencies and generated output
+node_modules
+dist
+coverage
+
+# Generated lockfile
+package-lock.json
+
+# Minified third-party assets
+*.min.css
+*.min.js

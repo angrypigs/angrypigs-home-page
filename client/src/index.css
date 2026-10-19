@@ -1,1 +1,43 @@
 @import 'tailwindcss';
+
+@theme {
+  --color-page: #09090b;
+  --color-surface: #18181b;
+  --color-surface-hover: #27272a;
+  --color-line: #27272a;
+  --color-line-strong: #3f3f46;
+  --color-copy: #f4f4f5;
+  --color-copy-muted: #a1a1aa;
+  --color-copy-faint: #71717a;
+  --color-accent-blue: #0a15b3;
+  --color-accent-magenta: #8b1aae;
+  --color-accent: #d946ef;
+  --radius-card: 0.75rem;
+}
+
+@layer base {
+  :root {
+    --gradient-accent: linear-gradient(
+      135deg,
+      var(--color-accent-blue),
+      var(--color-accent-magenta)
+    );
+
+    color-scheme: dark;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    min-width: 320px;
+    min-height: 100vh;
+    margin: 0;
+    background: var(--color-page);
+    color: var(--color-copy);
+  }
+
+  button,
+  input {
+    font: inherit;
+  }
+}
